@@ -1,0 +1,11 @@
+{
+	"start": "Welcome! Please choose your language:",
+	"description": "This bot allows you to purchase our program.",
+	"about": "We offer the best software solutions.",
+	"buy": "Buy Program",
+	"payment_info": "To proceed with the purchase, please send 50 USDT or more (TRC20 network) to the following address:",
+	"transaction_request": "After sending the payment, please send your transaction hash here.",
+	"thank_you": "Thank you for your purchase!",
+	"invalid_token": "Invalid or expired token. Please try again or contact support.",
+	"activation_success": "Activation successful! Your token is now active."
+}

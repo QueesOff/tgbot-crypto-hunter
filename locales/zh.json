@@ -1,0 +1,11 @@
+{
+	"start": "欢迎！请选择您的语言：",
+	"description": "此机器人可让您购买我们的程序。",
+	"about": "我们提供最好的软件解决方案。",
+	"buy": "购买程序",
+	"payment_info": "要继续购买，请发送50 USDT或更多（TRC20网络）到以下地址：",
+	"transaction_request": "发送付款后，请在此处发送您的交易哈希值。",
+	"thank_you": "感谢您的购买！",
+	"invalid_token": "无效或已过期的令牌。请重试或联系支持。",
+	"activation_success": "激活成功！您的令牌现已激活。"
+}
