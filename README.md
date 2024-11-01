@@ -1,2 +1,1 @@
-const TOKEN = '7529628802:AAGks5NHlLrhm3pF95uq9qzz_DeVIeJM8Yg'
-TXFm9sTiJ2z2CL962WP2PDAngi8GAKKfXU
+### Crypto Bot

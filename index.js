@@ -1,9 +1,8 @@
-// bot.js
 require('dotenv').config()
 const TelegramBot = require('node-telegram-bot-api')
 const i18n = require('./i18n')
 const { checkPayment, generateToken } = require('./utils')
-const { saveToken, loadToken, deleteToken } = require('./file_manager')
+const { saveToken } = require('./file_manager')
 const logger = require('./logger') // Используем winston для логирования
 
 const TOKEN = process.env.TELEGRAM_TOKEN
