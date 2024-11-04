@@ -58,37 +58,32 @@ bot.on('message', async msg => {
 	const chatId = msg.chat.id
 	const text = msg.text
 
-	// Игнорируем команды (начинаются с '/')
-	if (text.startsWith('/')) {
-		return
-	}
-
-	// Проверка кнопки "🛒 Купить программу"
 	if (text === `🛒 ${i18n.__('buy')}`) {
-		// Сохраняем состояние пользователя
 		userSessions[chatId] = { awaitingPayment: true }
 
-		bot.sendMessage(
-			chatId,
-			`💳 ${i18n.__(
-				'payment_info'
-			)}\n\n🚀 *Отправьте 50 USDT или больше (сеть TRC20) на следующий адрес:*\n\n📬 *Адрес*: \`${
-				process.env.TRON_ADDRESS
-			}\`\n\n🔄 ${i18n.__('transaction_request')}`,
-			{ parse_mode: 'Markdown' }
-		)
-	}
-	// Проверка кнопки "ℹ️ О нас"
-	else if (text === `ℹ️ ${i18n.__('about')}`) {
-		bot.sendPhoto(chatId, './public/bg.png', {
-			caption: `ℹ️ ${i18n.__(
-				'description'
-			)}\n\n📥 Скачайте и активируйте вашу программу после оплаты!`,
-		})
+		const amount = 50 // сумма в USDT
+		const currency = 'USDT'
+		const order_id = generateToken() // Генерируем уникальный идентификатор заказа
+
+		try {
+			const payment = await createPayment(amount, currency, order_id)
+			bot.sendMessage(
+				chatId,
+				`💳 ${i18n.__(
+					'payment_info'
+				)}\n\n🚀 *Отправьте ${amount} ${currency} на следующий адрес:*\n\n📬 *Адрес*: \`${
+					payment.data.address
+				}\`\n\n🔄 ${i18n.__('transaction_request')}`
+			)
+		} catch (error) {
+			bot.sendMessage(
+				chatId,
+				'⚠️ Ошибка при создании платежа. Попробуйте позже.'
+			)
+		}
 	}
 	// Проверка хеша транзакции
 	else if (text.match(/^[0-9a-fA-F]{64}$/)) {
-		// Проверяем, ожидает ли пользователь ввода хеша
 		if (userSessions[chatId] && userSessions[chatId].awaitingPayment) {
 			bot.sendMessage(
 				chatId,
@@ -98,8 +93,7 @@ bot.on('message', async msg => {
 
 			if (result.success) {
 				const token = generateToken()
-				const threeMonthsInMs = 3 * 30 * 24 * 60 * 60 * 1000 // 3 месяца в миллисекундах
-				const expiration = Date.now() + threeMonthsInMs
+				const expiration = Date.now() + 3 * 30 * 24 * 60 * 60 * 1000 // 3 месяца
 				saveToken(token, expiration)
 
 				bot.sendMessage(
